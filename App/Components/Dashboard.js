@@ -48,7 +48,7 @@ class Dashboard extends React.Component{
 				component: Repositories,
 				passProps: {
 					userinfo: this.props.userinfo,
-					repos: res
+					repos: JSON.parse(res)
 				}
 			}))
 		})

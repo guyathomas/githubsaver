@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 18,
     color: "#111",
-    flex: 10
+    flexGrow: 10
   },
   rowContainer: {
     padding: 10,
@@ -40,13 +40,15 @@ const styles = StyleSheet.create({
   footerContainer: {
     backgroundColor: "#E3E3E3",
     alignItems: "center",
-    flexDirection: "row"
+    flexDirection: "row",
+    flex: 1
   }
 });
 
 class Notes extends React.Component{
   constructor(props) {
     super(props);
+    console.log('this.props.notes', this.props.notes)
 
     this.ds = new ListView.DataSource({
       rowHasChanged: (row1, row2) => row1 !== row2
