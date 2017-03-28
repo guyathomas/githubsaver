@@ -54,11 +54,18 @@ class Dashboard extends React.Component{
 		})
 	}
 	goToNotes() {
-		this.props.navigator.push(({
-			title: 'Notes',
-			component: Notes,
-			passProps: {userinfo: this.props.userinfo}
-		}))
+		api.getNotes(this.props.userinfo.login)
+		.then((res) => {
+			res = res || {};
+			this.props.navigator.push({
+				title: 'Notes',
+				component: Notes,
+				passProps: {
+					userinfo: this.props.userinfo,
+					notes: res
+				}
+			})
+		})
 	}
 
 	makeBackground(btn) {
