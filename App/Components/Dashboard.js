@@ -7,6 +7,8 @@ import {
   Image
 } from 'react-native';
 import Profile from './Profile';
+import Notes from './Notes';
+import Repos from './Repos';
 
 const styles = StyleSheet.create({
 	container: {
@@ -18,7 +20,7 @@ const styles = StyleSheet.create({
 	},
 	buttonText: {
 		fontSize: 24,
-		color: 'black',
+		color: 'white',
 		alignSelf: 'center'
 	}
 })
@@ -50,31 +52,46 @@ class Dashboard extends React.Component{
 			passProps: {userinfo: this.props.userinfo}
 		}))
 	}
+
+	makeBackground(btn) {
+		const obj = {
+			flexDirection: 'row',
+			alignSelf: 'stretch',
+			justifyContent: 'center',
+			flex: 1
+		}
+		if (btn === 0) {
+			obj.backgroundColor = '#48BBEC'
+		} else if (btn === 1) {
+			obj.backgroundColor = '#E77AAE'
+		} else {
+			obj.backgroundColor = '#758BF4'
+		}
+
+		return obj;
+	}
 	
 	render() {
 		return (
 			<View style={styles.container}>
 				<Image source={{uri: this.props.userinfo.avatar_url}} style={styles.image}/>
 				<TouchableHighlight 
+					style={this.makeBackground(0)}
 					onPress={this.goToProfile.bind(this)}
 					underlayColor='#88D4F5'>
 					<Text style={styles.buttonText}>View Profile</Text>
 				</TouchableHighlight>				
-			</View>
-			<View style={styles.container}>
-				<Image source={{uri: this.props.userinfo.avatar_url}} style={styles.image}/>
 				<TouchableHighlight 
+					style={this.makeBackground(1)}
 					onPress={this.goToRepos.bind(this)}
 					underlayColor='#88D4F5'>
-					<Text style={styles.buttonText}>View Profile</Text>
+					<Text style={styles.buttonText}>View Repos</Text>
 				</TouchableHighlight>				
-			</View>
-			<View style={styles.container}>
-				<Image source={{uri: this.props.userinfo.avatar_url}} style={styles.image}/>
 				<TouchableHighlight 
+					style={this.makeBackground(2)}
 					onPress={this.goToNotes.bind(this)}
 					underlayColor='#88D4F5'>
-					<Text style={styles.buttonText}>View Profile</Text>
+					<Text style={styles.buttonText}>View Notes</Text>
 				</TouchableHighlight>				
 			</View>
 		)
