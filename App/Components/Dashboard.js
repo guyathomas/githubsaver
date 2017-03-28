@@ -8,7 +8,9 @@ import {
 } from 'react-native';
 import Profile from './Profile';
 import Notes from './Notes';
-import Repos from './Repos';
+import Repositories from './Repositories';
+
+const api = require('../Utils/api')
 
 const styles = StyleSheet.create({
 	container: {
@@ -38,12 +40,18 @@ class Dashboard extends React.Component{
 			passProps: {userinfo: this.props.userinfo}
 		}))
 	}
-	goToRepos() {
-		this.props.navigator.push(({
-			title: 'Repos',
-			component: Repos,
-			passProps: {userinfo: this.props.userinfo}
-		}))
+	goToRepositories() {
+		api.getRepos(this.props.userinfo.login)
+		.then((res) => {
+			this.props.navigator.push(({
+				title: 'Repositories',
+				component: Repositories,
+				passProps: {
+					userinfo: this.props.userinfo,
+					repos: res
+				}
+			}))
+		})
 	}
 	goToNotes() {
 		this.props.navigator.push(({
@@ -83,9 +91,9 @@ class Dashboard extends React.Component{
 				</TouchableHighlight>				
 				<TouchableHighlight 
 					style={this.makeBackground(1)}
-					onPress={this.goToRepos.bind(this)}
+					onPress={this.goToRepositories.bind(this)}
 					underlayColor='#88D4F5'>
-					<Text style={styles.buttonText}>View Repos</Text>
+					<Text style={styles.buttonText}>View Repositories</Text>
 				</TouchableHighlight>				
 				<TouchableHighlight 
 					style={this.makeBackground(2)}
