@@ -53,7 +53,7 @@ class Profile extends React.Component{
 				return (
 					<View key={index}>
 						<View style={styles.rowContainer}>
-							<Text style={styles.rowTitle}>{this.getRowTitle.bind(this, item)}</Text>
+							<Text style={styles.rowTitle}>{this.getRowTitle(item)}</Text>
 							<Text style={styles.rowContent}>{userinfo[item]} </Text>
 						</View>
 					</View>
@@ -63,6 +63,7 @@ class Profile extends React.Component{
 		return (
 			<ScrollView style={styles.container}>
 				<Badge userinfo={this.props.userinfo}/>
+				{list}
 			</ScrollView>
 		)
 	}
