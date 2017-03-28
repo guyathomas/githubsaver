@@ -8,6 +8,8 @@ import {
   ActivityIndicatorIOS,
   TouchableHighlight
 } from 'react-native';
+import api from '../Utils/api'
+import Dashboard from './Dashboard'
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -65,16 +67,33 @@ class Main extends React.Component{
 	}
 
 	handleChange(e) {
-		this.setState({
-			username: e.nativeEvent.text
-		});
+		this.setState({ username: e.nativeEvent.text });
 	}
 
 	handleSubmit(e) {
 		this.setState({
 			isLoading: true
 		})
-		console.log('SUBMIT', this.state.username)
+
+		api.getBio(this.state.username)
+		.then((res) => {
+			if (res.message === 'Not Found') {
+				this.setState({
+					error: 'User not found',
+					isLoading: false
+				})
+			} else {
+				this.props.navigator.push({
+					title: res.name || 'Select an option',
+					component: Dashboard,
+					passProps: {userinfo: res}
+				})
+				this.setState({
+					isLoading: false,
+					username: ''
+				})
+			}
+		})
 	}
 
 	componentDidMount() {
