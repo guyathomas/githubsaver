@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import Badge from './Badge';
 import Separator from './Helpers/Separator'
+import Web from './Helpers/Web'
 
 const styles = {
 	container: {
@@ -39,8 +40,14 @@ class Repositories extends React.Component{
 	constructor(props) {
 		super(props)
 	}
-	clickHander(){
-		console.log('Item clicked')
+
+	openPage(url) {
+		console.log('this url was passed to openPage', url)
+		this.props.navigator.push({
+			component: Web,
+			title: 'Web View',
+			passProps: {url}
+		})
 	}
 
 	render() {
@@ -52,7 +59,7 @@ class Repositories extends React.Component{
 				<View key={i}>
 					<View style={styles.rowContainer}>
 						<TouchableHighlight
-							onPress={this.clickHander.bind(this)}
+							onPress={this.openPage.bind(this, item.html_url)}
 							underlayColor='transparent'>
 							<Text style={styles.name}>{item.name}</Text>
 						</TouchableHighlight>
