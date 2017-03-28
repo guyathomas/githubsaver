@@ -5,7 +5,7 @@ import {
   View,
   PropTypes,
   TextInput,
-  ActivityIndicatorIOS,
+  ActivityIndicator,
   TouchableHighlight
 } from 'react-native';
 import api from '../Utils/api'
@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
   title: {
   	color: 'white',
   	fontSize: 25,
-  	// textAlign: 'center'
   },
   searchInput: {
   	height: 50,
@@ -61,7 +60,7 @@ class Main extends React.Component{
 		super(props)
 		this.state = {
 			username: '',
-			isLoading: '',
+			isLoading: false,
 			error: ''
 		}
 	}
@@ -100,6 +99,7 @@ class Main extends React.Component{
 		console.log('Component mounted')
 	}
 	render() {
+		const showErr = this.state.error ? <Text>{this.state.error}</Text> : <View/>
 		return (
 			<View style={styles.mainContainer}>
 			  <Text style={styles.title}>Search for a Github User</Text>
@@ -114,6 +114,11 @@ class Main extends React.Component{
 			  	underlayColor="white">
 			  	<Text style={styles.buttonText}>SEARCH</Text>
 			  </TouchableHighlight>
+		  	  <ActivityIndicator
+		            animating={this.state.isLoading}
+		            size="large"
+		          />
+			  {showErr}
 			</View>
 		)
 	}
